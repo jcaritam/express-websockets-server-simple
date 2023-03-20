@@ -18,9 +18,14 @@ socket.on('disconnect', () => {
   spanOffline.style.display = 'block';
 });
 
+socket.on('send-message', (payload) => {
+  console.log(payload);
+});
+
 btnSend.addEventListener('click', () => {
   const message = txtMessage.value;
 
-  socket.emit('send-message', message);
-  console.log(`click: ${message}`);
+  socket.emit('send-message', message, (id) => {
+    console.log(`received on client: ${id}`);
+  });
 });

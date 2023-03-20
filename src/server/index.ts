@@ -1,6 +1,7 @@
 import http from 'http';
 import express, { Express } from 'express';
 import * as socketIo from 'socket.io';
+import { socketController } from '../sockets/controller';
 
 const PORT = process.env.PORT || 3000;
 
@@ -31,17 +32,7 @@ export default class Server {
   routes() {}
 
   sockets() {
-    this.io.on('connection', (socket) => {
-      console.log(`Client conectado`);
-
-      socket.on('send-message', (payload) => {
-        console.log(`received message: ${payload}`);
-      });
-
-      socket.on('disconnect', () => {
-        console.log(`cliente desconectado`);
-      });
-    });
+    this.io.on('connection', socketController);
   }
 
   listen() {
